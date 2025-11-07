@@ -3,10 +3,10 @@ from datetime import datetime, timedelta
 from jose import jwt, JWTError
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from app.core.config import settings
-from app.db.session import SessionLocal
+from backend.app.core.config import settings
+from backend.app.db.session import SessionLocal
 from sqlalchemy.orm import Session
-from app.db.crud.crud_user import get_user_by_email
+from backend.app.db.crud.crud_user import get_user_by_email
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/token")
