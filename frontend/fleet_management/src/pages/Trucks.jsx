@@ -9,7 +9,7 @@ export default function Trucks() {
 
   useEffect(() => {
     axios
-      .get('/api/v1/trucks', {
+      .get('/api/v1/trucks/', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setTrucks(res.data))

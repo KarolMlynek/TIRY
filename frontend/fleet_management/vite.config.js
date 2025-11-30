@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      '/api': 'http://localhost:5137',
+      '/api': 'http://tiry-backend:8000',
     },
   },
 })

@@ -20,8 +20,8 @@ export default function Dashboard() {
       .finally(() => setLoading(false))
 
     const headers = { Authorization: `Bearer ${token}` }
-    const tReq = axios.get('/api/v1/trucks', { headers })
-    const dReq = axios.get('/api/v1/drivers', { headers })
+    const tReq = axios.get('/api/v1/trucks/', { headers })
+    const dReq = axios.get('/api/v1/drivers/', { headers })
 
     Promise.all([tReq, dReq])
       .then(([tRes, dRes]) => {
