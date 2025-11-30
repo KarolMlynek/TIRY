@@ -8,12 +8,16 @@ export default function Dashboard() {
   const [trucksCount, setTrucksCount] = useState(null)
   const [driversCount, setDriversCount] = useState(null)
   const [loading, setLoading] = useState(true)
+   const [stats, setStats] = useState(null)
   const [error, setError] = useState('')
 
   useEffect(() => {
     if (!token) return
     setLoading(true)
-    setError('')
+    api.get('/stats/', { headers: { Authorization: `Bearer ${token}` } })
+      .then(res => setStats(res.data))
+      .catch(() => setError('Błąd pobierania statystyk'))
+      .finally(() => setLoading(false))
 
     const headers = { Authorization: `Bearer ${token}` }
     const tReq = axios.get('/api/v1/trucks', { headers })
@@ -30,7 +34,8 @@ export default function Dashboard() {
       })
       .finally(() => setLoading(false))
   }, [token])
-
+  if (!token) return <div>Zaloguj się</div>
+  
   return (
     <div style={{ padding: 20 }}>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -69,6 +74,30 @@ export default function Dashboard() {
             <small>Dodawaj, edytuj lub przeglądaj szczegóły</small>
           </div>
         </section>
+      )}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {stats && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12 }}>
+          <div style={{ padding:12, border:'1px solid #ddd', borderRadius:8 }}>
+            <h3>Pojazdy</h3>
+            <p style={{ fontSize:24 }}>{stats.trucks_count}</p>
+            <Link to="/trucks">Zarządzaj</Link>
+          </div>
+          <div style={{ padding:12, border:'1px solid #ddd', borderRadius:8 }}>
+            <h3>Kierowcy</h3>
+            <p style={{ fontSize:24 }}>{stats.drivers_count}</p>
+            <Link to="/drivers">Zarządzaj</Link>
+          </div>
+          <div style={{ padding:12, border:'1px solid #ddd', borderRadius:8 }}>
+            <h3>Nadchodzące przeglądy (7d)</h3>
+            <p style={{ fontSize:24 }}>{stats.upcoming_maintenances_7d}</p>
+            <Link to="/maintenance">Kalendarz serwisów</Link>
+          </div>
+          <div style={{ padding:12, border:'1px solid #ddd', borderRadius:8 }}>
+            <h3>Zaległe serwisy</h3>
+            <p style={{ fontSize:24 }}>{stats.overdue_maintenances}</p>
+          </div>
+        </div>
       )}
 
       <footer style={{ marginTop: 24, color: '#666' }}>

@@ -22,5 +22,6 @@ export default function Trucks() {
         <TruckCard key={t.id} truck={t} />
       ))}
     </div>
+
   )
 }
