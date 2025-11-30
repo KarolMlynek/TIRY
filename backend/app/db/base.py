@@ -1,4 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from app.db.models import user, company, truck, driver, route, maintenance, service_record, fuel_log, gps_device, alert  # noqa: F401
 
 Base = declarative_base()
+
+from app.db.models import user, company, truck, driver, route, maintenance, service_record, fuel_log, gps_device, alert, part, trips, notification  # noqa: F401
