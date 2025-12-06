@@ -15,3 +15,5 @@ class Driver(Base):
     company = relationship("Company", back_populates="drivers")
     routes = relationship("Route", back_populates="driver")
     fuel_logs = relationship("FuelLog", back_populates="driver")
+    truck_id = Column(Integer, ForeignKey("trucks.id"), nullable=True)
+    truck = relationship("Truck", back_populates="drivers")

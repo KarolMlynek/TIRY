@@ -20,3 +20,4 @@ class Truck(Base):
     maintenances = relationship("Maintenance", back_populates="truck")
     fuel_logs = relationship("FuelLog", back_populates="truck")
     alerts = relationship("Alert", back_populates="truck")
+    drivers = relationship("Driver", back_populates="truck")
